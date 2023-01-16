@@ -1,9 +1,10 @@
-function PopupWithForm({ title, name, children, isOpen }) {
+function PopupWithForm({ title, name, children, isOpen, onClose }) {
   return (
     <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`}>
       <div className='popup__container'>
         <form className='popup__form' name={name} noValidate>
           <button
+            onClick={onClose}
             className='popup__close'
             type='button'
             aria-label='Close'></button>
