@@ -10,22 +10,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api
-      .getUserProfile()
-      .then((userData) => {
+    Promise.all([api.getUserProfile(), api.getInitialCards()])
+      .then(([userData, cards]) => {
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
         setCards(cards);
       })
       .catch((error) => {

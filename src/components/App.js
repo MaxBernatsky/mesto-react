@@ -49,6 +49,7 @@ function App() {
         />
         <Footer />
         <PopupWithForm
+          buttonText={'Сохранить'}
           name='profile'
           title='Редактировать профиль'
           isOpen={isEditProfilePopupOpen}
@@ -80,6 +81,7 @@ function App() {
         </PopupWithForm>
 
         <PopupWithForm
+          buttonText={'Сохранить'}
           name='popupChangeForm'
           title='Обновить аватар'
           isOpen={isEditAvatarPopupOpen}
@@ -98,6 +100,7 @@ function App() {
         </PopupWithForm>
 
         <PopupWithForm
+          buttonText={'Создать'}
           name='popupPlaceForm'
           title='Новое место'
           isOpen={isAddPlacePopupOpen}

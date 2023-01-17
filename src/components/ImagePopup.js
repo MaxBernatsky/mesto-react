@@ -9,7 +9,7 @@ function ImagePopup({ card, onClose, isOpen }) {
             type='button'
             aria-label='Close'></button>
           <img
-            src={card ? card.link : ''}
+            src={card?.link}
             alt={card ? card.name : ''}
             className='popup__img'
           />
