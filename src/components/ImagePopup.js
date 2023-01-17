@@ -1,14 +1,21 @@
-function ImagePopup() {
+function ImagePopup({ card, onClose, isOpen }) {
   return (
-    <div id='popup-img' className='popup'>
+    <div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
       <div className='popup__container'>
         <figure className='popup__figure'>
           <button
+            onClick={onClose}
             className='popup__close'
             type='button'
             aria-label='Close'></button>
-          <img src='#' alt='картинка' className='popup__img' />
-          <figcaption className='popup__descr'>Горный Алтай</figcaption>
+          <img
+            src={card ? card.link : ''}
+            alt={card ? card.name : ''}
+            className='popup__img'
+          />
+          <figcaption className='popup__descr'>
+            {card ? card.name : ''}
+          </figcaption>
         </figure>
       </div>
     </div>

@@ -3,6 +3,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import { useState } from 'react';
+import ImagePopup from './ImagePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -10,6 +11,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+
+  const [selectedCard, setIsSelectedCard] = useState(null);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -27,6 +30,11 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsSelectedCard(null);
+  }
+
+  function handleCardClick(card) {
+    setIsSelectedCard(card);
   }
 
   return (
@@ -37,6 +45,7 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onEditAvatar={handleEditAvatarClick}
           onAddPlace={handleAddPlaceClick}
+          onCardClick={handleCardClick}
         />
         <Footer />
         <PopupWithForm
@@ -118,6 +127,11 @@ function App() {
             className='popup__input-error'
             id='place-link-input-error'></span>
         </PopupWithForm>
+        <ImagePopup
+          card={selectedCard}
+          isOpen={selectedCard}
+          onClose={closeAllPopups}
+        />
       </div>
     </div>
   );
