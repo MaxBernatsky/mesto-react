@@ -78,6 +78,13 @@ export class Api {
       headers: this._headers,
     }).then(this._checkResponse);
   }
+
+  changeLikeCardStatus(id, methodLikeCard) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+      headers: this._headers,
+      method: methodLikeCard,
+    }).then(this._checkResponse);
+  }
 }
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-55',
