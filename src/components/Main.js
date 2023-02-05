@@ -1,31 +1,18 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import api from '../utils/api.js';
+import { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import Card from './Card';
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    Promise.all([api.getUserProfile(), api.getInitialCards()])
-      .then(([userData, cards]) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-        setCards(cards);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards }) {
+  const currentUser = useContext(CurrentUserContext);
   return (
     <main className='container'>
       <section className='profile'>
         <div className='profile__img-container'>
-          <img src={userAvatar} alt='Ваш Аватар' className='profile__img' />
+          <img
+            src={currentUser.avatar}
+            alt='Ваш Аватар'
+            className='profile__img'
+          />
           <button
             onClick={onEditAvatar}
             className='profile__img-edit'
@@ -33,13 +20,13 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
             aria-label='edit-avatar'></button>
         </div>
         <div className='profile__info'>
-          <h1 className='profile__title'>{userName}</h1>
+          <h1 className='profile__title'>{currentUser.name}</h1>
           <button
             className='profile__btn-edit'
             onClick={onEditProfile}
             type='button'
             aria-label='Edit'></button>
-          <p className='profile__subtitle'>{userDescription}</p>
+          <p className='profile__subtitle'>{currentUser.about}</p>
         </div>
         <button
           onClick={onAddPlace}
