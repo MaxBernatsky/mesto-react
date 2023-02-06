@@ -20,13 +20,13 @@ export class Api {
     }).then(this._checkResponse);
   }
 
-  editUserProfile(profileInputsData) {
+  setUserProfile(userInfo) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({
-        name: `${profileInputsData.profileName}`,
-        about: `${profileInputsData.profileProfession}`,
+        name: `${userInfo.name}`,
+        about: `${userInfo.about}`,
       }),
     }).then(this._checkResponse);
   }

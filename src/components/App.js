@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
-import { useEffect, useState } from 'react';
+import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -20,7 +21,7 @@ function App() {
 
   const [cards, setCards] = useState([]);
 
-  const [deletedCard, setDeletedCard] = useState(null);
+  const [deletedCard, setDeletedCard] = useState([]);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -67,6 +68,16 @@ function App() {
       .catch((error) => console.log(error));
   }
 
+  function handleUpdateUser(data) {
+    api
+      .setUserProfile(data)
+      .then((newInfo) => {
+        setCurrentUser(newInfo);
+        closeAllPopups();
+      })
+      .catch((error) => console.log(error));
+  }
+
   useEffect(() => {
     Promise.all([api.getUserProfile(), api.getInitialCards()])
       .then(([userData, cards]) => {
@@ -94,38 +105,11 @@ function App() {
             cards={cards}
           />
           <Footer />
-          <PopupWithForm
-            buttonText={'Сохранить'}
-            name='profile'
-            title='Редактировать профиль'
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}>
-            <input
-              type='text'
-              className='popup__input popup__input_item_name'
-              name='profileName'
-              placeholder='Введите имя'
-              required
-              minLength='2'
-              maxLength='40'
-              id='name-input'
-            />
-            <span className='popup__input-error' id='name-input-error'></span>
-            <input
-              type='text'
-              className='popup__input popup__input_item_descr'
-              name='profileProfession'
-              placeholder='Ваша профессия'
-              required
-              minLength='2'
-              maxLength='200'
-              id='profession-input'
-            />
-            <span
-              className='popup__input-error'
-              id='profession-input-error'></span>
-          </PopupWithForm>
-
+            onClose={closeAllPopups}
+            onUpdateUser={handleUpdateUser}
+          />
           <PopupWithForm
             buttonText={'Сохранить'}
             name='popupChangeForm'
