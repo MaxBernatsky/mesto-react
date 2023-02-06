@@ -31,11 +31,11 @@ export class Api {
     }).then(this._checkResponse);
   }
 
-  editAvatar(avatar) {
+  setUserAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: this._headers,
       method: 'PATCH',
-      body: JSON.stringify({ avatar: `${avatar.link}` }),
+      body: JSON.stringify(avatar),
     }).then(this._checkResponse);
   }
 
