@@ -16,7 +16,7 @@ function App() {
 
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 
-  const [selectedCard, setIsSelectedCard] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({});
 
@@ -40,11 +40,11 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setIsSelectedCard(null);
+    setSelectedCard(null);
   }
 
   function handleCardClick(card) {
-    setIsSelectedCard(card);
+    setSelectedCard(card);
   }
 
   function handleCardLike(card) {
@@ -112,7 +112,6 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      {' '}
       <div className='root' id='root'>
         <div className='page'>
           <Header />
