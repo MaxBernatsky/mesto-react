@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -89,6 +89,16 @@ function App() {
       .catch((error) => console.log(error));
   }
 
+  function handleAddPlaceSubmit(cardData) {
+    api
+      .setCard(cardData)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((error) => console.log(error));
+  }
+
   useEffect(() => {
     Promise.all([api.getUserProfile(), api.getInitialCards()])
       .then(([userData, cards]) => {
@@ -128,37 +138,12 @@ function App() {
             onUpdateAvatar={handleUpdateAvatar}
           />
 
-          <PopupWithForm
-            buttonText={'Создать'}
-            name='popupPlaceForm'
-            title='Новое место'
+          <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}>
-            <input
-              type='text'
-              className='popup__input popup__input_item_name'
-              name='name'
-              placeholder='Название'
-              required
-              minLength='2'
-              maxLength='30'
-              id='place-link-input'
-            />
-            <span
-              className='popup__input-error'
-              id='place-name-input-error'></span>
-            <input
-              type='url'
-              className='popup__input popup__input_item_descr'
-              name='link'
-              placeholder='Ссылка на картинку'
-              required
-              id='place-link-input'
-            />
-            <span
-              className='popup__input-error'
-              id='place-link-input-error'></span>
-          </PopupWithForm>
+            onClose={closeAllPopups}
+            onAddPlace={handleAddPlaceSubmit}
+          />
+
           <ImagePopup
             card={selectedCard}
             isOpen={selectedCard}
